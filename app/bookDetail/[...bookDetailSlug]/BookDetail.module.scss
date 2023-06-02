@@ -1,0 +1,151 @@
+@import "../../../styles/Variables.scss";
+@import "../../../styles/Breakpoints.scss";
+
+.book-detail {
+  display: flex;
+  flex-direction: column;
+  background-color: map-get($colors, superLightBrown);
+  @include sm {
+    flex-direction: row;
+    padding: 2rem 5rem;
+  }
+}
+
+.book-detail-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  .book-detail-img-content {
+    display: block;
+    position: relative;
+    height: 30rem;
+    width: 20rem;
+    box-shadow: 5px 5px 20px grey;
+  }
+  @include sm {
+    width: 50%;
+  }
+}
+
+.book-detail-img-content + div {
+  width: 60%;
+  @include sm {
+    width: 100%;
+    height: 60%;
+  }
+  @include md {
+    width: 60%;
+    height: 60%;
+  }
+}
+
+.book-detail-content {
+  color: map-get($colors, darkBrown);
+  font-family: $primaryFontFamily;
+  margin-top: 1rem;
+  text-align: center;
+  position: relative;
+  margin: 2rem;
+  h1 {
+    font-size: map-get($fontSizes, title);
+    font-weight: map-get($fontWeight, bold);
+  }
+  h2 {
+    font-size: map-get($fontSizes, primary);
+    font-weight: map-get($fontWeight, regular);
+  }
+  p {
+    font-size: map-get($fontSizes, secondary);
+    font-weight: map-get($fontWeight, regular);
+  }
+  h3,
+  h4,
+  p {
+    margin: 0;
+  }
+  h3,
+  h4 {
+    color: map-get($colors, darkBrown);
+    font-size: map-get($fontSizes, secondary);
+    font-weight: map-get($fontSizes, bold);
+  }
+  @include sm {
+    width: 50%;
+    padding-left: 1rem;
+  }
+}
+.book-detail-container-authors{
+  padding-bottom: 2rem;
+}
+.book-detail-content-upper-side {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  h1 {
+    width: 100%;
+    text-align: center;
+  }
+}
+.book-detail-content-heart {
+  margin: 0;
+  margin-left: 1rem;
+  padding: 0.4rem 0.3rem 0.2rem 0.3rem;
+  border: none;
+  background-color: map-get($colors, superLightBrown);
+  height: 3rem;
+  border-radius: 0.5rem;
+  svg {
+    pointer-events: none;
+  }
+}
+.book-detail-content-heart-active {
+  @extend .book-detail-content-heart;
+  background-color: map-get($colors, lightBrown);
+}
+.book-detail-container-description {
+  overflow: auto;
+  h3 {
+    padding: 1.5rem 0 0 2.5rem;
+  }
+  p {
+    padding: 1.5rem 2.5rem;
+    text-align: justify;
+  }
+  background-color: white;
+  border-radius: 1.5rem;
+  @include sm {
+    h3 {
+      padding-top: 2rem;
+    }
+    p {
+      padding: 0 3rem 2rem 3rem;
+    }
+    border-radius: 1.5rem;
+  }
+}
+.book-detail-container-dates {
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 1.5rem;
+  justify-content: center;
+  div {
+    background-color: white;
+    width: 50%;
+    height: auto;
+    border-radius: 1.5rem;
+    padding: 1.3rem 1rem;
+    p {
+      padding-top: 0.5rem;
+    }
+  }
+}
+.book-detail-container-subjects {
+  margin-top: 2rem;
+  background-color: white;
+  border-radius: 1.5rem;
+  padding: 1.3rem 1rem;
+}

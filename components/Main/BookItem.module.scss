@@ -1,0 +1,85 @@
+@import "../../styles/Variables.scss";
+
+.book-item {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  align-items: center;
+}
+.book-item-image {
+  width: 50%;
+  position: relative;
+  box-shadow: 5px 5px 20px grey;
+  .book-item-image-link-container {
+    position: relative;
+    height: 15rem;
+  }
+  a + div {
+    width: 100%;
+  }
+}
+.book-item-image-heart {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0.4rem 0.3rem 0.2rem 0.3rem;
+  border: none;
+  border-radius: 100%;
+  background-color: map-get($colors, superLightBrown);
+  cursor:pointer;
+  svg {
+    pointer-events: none;
+  }
+}
+.book-item-image-heart-active {
+  @extend .book-item-image-heart;
+  background-color: map-get($colors, lightBrown);
+}
+
+.book-item-content {
+  margin-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 50%;
+  height: 100%;
+  font-family: $primaryFontFamily;
+  color: map-get($colors, darkBrown);
+  h2 {
+    font-size: map-get($fontSizes, primary);
+    font-weight: map-get($fontWeight, bold);
+  }
+  p {
+    padding-top: 1rem;
+    font-size: map-get($fontSizes, tertiary);
+    font-weight: map-get($fontWeight, regular);
+  }
+  a {
+    color: inherit;
+  }
+  a:hover {
+    color: map-get($colors, darkBrown);
+  }
+}
+
+.book-item-info-link {
+  border-style: solid;
+  border-width: 1px;
+  color: map-get($colors, lightBrown);
+  border-color: map-get($colors, lightBrown);
+  background-color: map-get($colors, superLightBrown);
+  font-size: map-get($fontSizes, secondary);
+  border-radius: map-get($fontSizes, primary);
+  padding: 0.6rem 0;
+  text-align: center;
+}
+
+.book-item-info-link:hover {
+  color: white;
+  border-color: map-get($colors, lightBrown);
+  background-color: map-get($colors, lightBrown);
+  a {
+    color: white;
+  }
+}

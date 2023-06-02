@@ -1,0 +1,88 @@
+@import "../../styles/Variables.scss";
+@import "../../styles/Breakpoints.scss";
+
+.nav {
+  width: 100%;
+  position: relative;
+  top: 0;
+  background-color: map-get($colors, superLightBrown);
+  @include sm {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+  }
+}
+.nav-ppal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3% 5%;
+  button:focus {
+    outline: 0;
+    background-color: map-get($colors, lightBrown);
+  }
+  button:hover {
+    border: none;
+  }
+  img{
+    height: 40px;
+  }
+  @include sm {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+}
+.nav-ppal-dropdown {
+  display: none;
+  @include sm {
+    display: flex;
+    color: map-get($colors, darkBrown);
+    padding-left: 2rem;
+    font-family: $secondaryFontFamily;
+    h2 {
+      font-size: map-get($fontSizes, header);
+      font-weight: map-get($fontWeight, semibold);
+      margin: 0;
+      padding-right: 0.5rem;
+    }
+    .nav-ppal-dropdown-subject {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+.nav-ppal-mobile-button {
+  background-color: map-get($colors, superLightBrown);
+  padding: 0;
+  border: 0;
+  border-radius: 0.5rem;
+  @include sm {
+    display: none;
+  }
+}
+
+.side-nav-mobile {
+  display: none;
+}
+
+.nav-active {
+  position: absolute;
+  background-color: map-get($colors, superLightBrown);
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  z-index: 50;
+  img {
+    display: none;
+  }
+  .nav-searchbar {
+    display: none;
+  }
+  .side-nav-mobile {
+    display: flex;
+    height: 100%;
+  }
+}

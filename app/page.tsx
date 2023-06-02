@@ -1,7 +1,11 @@
+"use client";
 import Image from 'next/image'
 import styles from './page.module.css'
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from '@/store';
 
 export default function Home() {
+  const offset = useSelector((state: RootState) => state.pagination.offset);
   return (
     <main className={styles.main}>
       <div className={styles.description}>
@@ -15,7 +19,6 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            By{' '}
             <Image
               src="/vercel.svg"
               alt="Vercel Logo"

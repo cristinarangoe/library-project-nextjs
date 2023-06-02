@@ -1,0 +1,48 @@
+@import "../../styles/Variables.scss";
+@import "../../styles/Breakpoints.scss";
+
+.nav-searchbar {
+  border-radius: 30px;
+  background-color: white;
+  display: flex;
+  margin: 1rem 5%;
+  height: 50%;
+  padding: 0;
+  input {
+    font-family: $secondaryFontFamily;
+    color: map-get($colors, darkBrown);
+    font-weight: map-get($fontWeight, regular);
+    border: none;
+    border-radius: 30px;
+    width: 100%;
+    padding: 15px 20px;
+  }
+  input:focus {
+    outline: none;
+  }
+  .nav-searchbar-logo {
+    background-color: map-get($colors, lightBrown);
+    border-radius: 30px;
+    border: 0;
+    padding: 0 20px
+  }
+  @include sm {
+    margin: 0 2rem;
+    width: 20rem;
+  }
+}
+
+.nav-searchbar-dropdown {
+  background-color: white;
+  border: none;
+  border-radius: 30px;
+  margin: 0 10px;
+  outline: none;
+}
+
+.nav-searchbar-dividor {
+  height: auto;
+  background-color: map-get($colors, lightBrown);
+  width: 5px;
+  margin: 5px 0;
+}
