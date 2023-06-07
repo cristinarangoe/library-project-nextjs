@@ -1,7 +1,7 @@
 import { ApiBook, ApiData } from "../models/apiBookSearch";
 import Book from "../models/book";
 
-const dataTransformation = async (data: ApiData) => {
+const dataTransformation =  (data: ApiData) => {
   const transformedBooks: Book[] = data.docs.map((book: ApiBook) => {
     return {
       id: book.key,

@@ -9,7 +9,6 @@
   height: 50%;
   padding: 0;
   input {
-    font-family: $secondaryFontFamily;
     color: map-get($colors, darkBrown);
     font-weight: map-get($fontWeight, regular);
     border: none;

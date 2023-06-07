@@ -1,37 +1,75 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Pagination.module.scss";
 import ChevronIconDown from "../UI/ChevronIconDown";
-import { useDispatch, useSelector } from "react-redux";
-import { paginationActions } from "../../store/pagination";
-import { RootState } from "../../store";
+import { montserrat } from "@/styles/fonts";
+import { useRouter } from "next/navigation";
 
-function Pagination() {
-  const dispatch = useDispatch();
+const Pagination: React.FC<{
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  totalPages: number;
+  url: string;
+  numberOfBooksPerPage: number;
+}> = (props) => {
+  const [lowerPageRange, setLowerPageRange] = useState(props.currentPage);
 
-  const currentPage = useSelector(
-    (state: RootState) => state.pagination.currentPage
-  );
-  const totalPages = useSelector(
-    (state: RootState) => state.pagination.totalPages
-  );
-  const lowerPageRange = useSelector(
-    (state: RootState) => state.pagination.lowerPageRange
-  );
+  const router = useRouter();
+  const currentPage = props.currentPage;
+  const totalPages = props.totalPages;
+  const url = props.url;
+  const numberOfBooksPerPage = props.numberOfBooksPerPage;
 
   const nextPageClickHandler = () => {
-    dispatch(paginationActions.nextPage());
+    if (currentPage === totalPages) return;
+    const tempCurrentPage = currentPage;
+    props.setCurrentPage((prevState) => prevState++);
+    if (totalPages <= 5) return;
+    if (currentPage === totalPages) {
+      setLowerPageRange(totalPages - 5);
+      return;
+    }
+    if (totalPages - 5 <= currentPage && currentPage < totalPages) {
+      setLowerPageRange(totalPages - 5);
+      return;
+    }
+    setLowerPageRange((prevState) => prevState++);
+    router.push(`${url}/${tempCurrentPage + 1}/${numberOfBooksPerPage}`);
   };
 
   const previousPageClickHandler = () => {
-    dispatch(paginationActions.previousPage());
+    if (currentPage === 1) return;
+
+    const tempCurrentPage = currentPage;
+    props.setCurrentPage((prevState) => prevState--);
+
+    if (totalPages <= 5) return;
+
+    if (totalPages - 5 < currentPage && currentPage <= totalPages) {
+      setLowerPageRange((prevState) => prevState - 5);
+      return;
+    }
+    setLowerPageRange((prevState) => prevState--);
+    router.push(`${url}/${tempCurrentPage - 1}/${numberOfBooksPerPage}`);
   };
 
   const goToAPageClickHandler = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    dispatch(
-      paginationActions.goToAPage(+(e.target as HTMLButtonElement).value)
-    );
+    const target = +(e.target as HTMLButtonElement).value;
+    props.setCurrentPage(target);
+
+    if (totalPages <= 5) return;
+
+    if (target === totalPages) {
+      setLowerPageRange(totalPages - 5);
+      return;
+    }
+    if (totalPages - 5 <= target && target < totalPages) {
+      setLowerPageRange(totalPages - 5);
+      return;
+    }
+    setLowerPageRange(() => target);
+    router.push(`${url}/${target}/${numberOfBooksPerPage}`);
   };
 
   return (
@@ -47,7 +85,7 @@ function Pagination() {
       <div className={styles["pagination-pages"]}>
         {currentPage > 2 && totalPages > 5 && (
           <button
-            className={styles["pagination-button-number"]}
+            className={`${styles["pagination-button-number"]} ${montserrat.className}`}
             value={1}
             onClick={goToAPageClickHandler}
           >
@@ -55,7 +93,11 @@ function Pagination() {
           </button>
         )}
         {currentPage > 2 && totalPages > 5 && (
-          <p className={styles["pagination-button-number"]}>...</p>
+          <p
+            className={`${styles["pagination-button-number"]} ${montserrat.className}`}
+          >
+            ...
+          </p>
         )}
         {[...new Array(totalPages > 5 ? 5 : totalPages)].map((num, i) => {
           return (
@@ -64,7 +106,7 @@ function Pagination() {
               className={
                 currentPage === +lowerPageRange + i
                   ? styles["pagination-button-number-active"]
-                  : styles["pagination-button-number"]
+                  : `${styles["pagination-button-number"]} ${montserrat.className}`
               }
               value={+lowerPageRange + i}
               onClick={goToAPageClickHandler}
@@ -74,14 +116,18 @@ function Pagination() {
           );
         })}
         {totalPages > 5 && (
-          <p className={styles["pagination-button-number"]}>...</p>
+          <p
+            className={`${styles["pagination-button-number"]} ${montserrat.className}`}
+          >
+            ...
+          </p>
         )}
         {totalPages > 5 && (
           <button
             className={
               currentPage === totalPages
                 ? styles["pagination-button-number-active"]
-                : styles["pagination-button-number"]
+                : `${styles["pagination-button-number"]} ${montserrat.className}`
             }
             value={totalPages}
             onClick={goToAPageClickHandler}
@@ -100,5 +146,5 @@ function Pagination() {
       </div>
     </div>
   );
-}
+};
 export default Pagination;

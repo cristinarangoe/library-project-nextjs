@@ -8,6 +8,7 @@ import XMarkIcon from "../UI/XMarkIcon";
 import BarsIcon from "../UI/BarsIcon";
 import ChevronIconDown from "../UI/ChevronIconDown";
 import Image from "next/image";
+import { montserrat } from "@/styles/fonts";
 
 function Navbar() {
   const [mobileMenuClicked, setMobileMenuClicked] = useState<boolean>(false);
@@ -45,7 +46,7 @@ function Navbar() {
             onMouseEnter={openDropdownHandler}
             className={styles["nav-ppal-dropdown"]}
           >
-            <div className={styles["nav-ppal-dropdown-subject"]}>
+            <div className={`${styles["nav-ppal-dropdown-subject"]} ${montserrat.className}`}>
               <h2 className="">Categoria</h2>
               <ChevronIconDown />
             </div>

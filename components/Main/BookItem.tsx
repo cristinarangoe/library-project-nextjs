@@ -16,6 +16,7 @@ const BookItem: React.FC<{ book: Book; isFavorite: boolean }> = (props) => {
   const saveFavoriteBookClickHandler = () => {
     dispatch(favoriteBooksActions.saveFavoriteBooks(props.book.id));
   };
+  
   return (
     <div className={styles["book-item"]}>
       <div className={styles["book-item-image"]}>
@@ -40,6 +41,7 @@ const BookItem: React.FC<{ book: Book; isFavorite: boolean }> = (props) => {
               ? styles["book-item-image-heart-active"]
               : styles["book-item-image-heart"]
           }`}
+
           onClick={saveFavoriteBookClickHandler}
         >
           <HeartIcon />

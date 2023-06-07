@@ -1,19 +1,22 @@
 import React from "react";
 import styles from "./DropdownNumberOfBooks.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { paginationActions } from "../../store/pagination";
-import { RootState } from "../../store";
+import { useRouter } from "next/navigation";
 
-function DropdownNumberOfBooks () {
-  const dispatch = useDispatch();
-  const limit = useSelector((state: RootState) => state.pagination.limit);
+const DropdownNumberOfBooks: React.FC<{
+  currentPage: number;
+  numberOfBooksPerPage: number;
+  setNumberOfBooksPerPage: React.Dispatch<React.SetStateAction<number>>;
+  url: string;
+}> = (props) => {
+  const router = useRouter();
 
   const maxBooksNumber = [5, 10, 15, 20];
 
   const selectedOptionChangeHandler = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    dispatch(paginationActions.setLimit(+e.target.value));
+    props.setNumberOfBooksPerPage(() => +e.target.value);
+    router.push(`${props.url}/${props.currentPage}/${+e.target.value}`);
   };
 
   return (
@@ -23,7 +26,7 @@ function DropdownNumberOfBooks () {
         id="maxBooks"
         className={styles["max-dropdown"]}
         onChange={selectedOptionChangeHandler}
-        value={limit}
+        value={props.numberOfBooksPerPage}
       >
         {maxBooksNumber.map((num, index) => (
           <option

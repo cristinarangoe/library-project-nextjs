@@ -1,27 +1,34 @@
-"use client";
 import BookList from "@/components/Main/BookList";
-import { ApiData } from "@/models/apiBookSearch";
-import Book from "@/models/book";
-import DropdownOption from "@/models/searchBarDropdownOption";
-import { RootState } from "@/store";
-import { paginationActions } from "@/store/pagination";
-import dataTransformation from "@/utils/dataTransformationBookSearch";
 import optionsDropdown from "@/constants/searchBarDropdownOptions";
-import useFetch from "@/utils/useFetch";
-import Head from "next/head";
-import { Fragment, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import DropdownOption from "@/models/searchBarDropdownOption";
+import dataTransformation from "@/utils/dataTransformationBookSearch";
+import React, { Fragment } from "react";
 
-function BookListBySearch({ params }: { params: { searchSlug: string[] } }) {
-  const [books, setBooks] = useState<Book[]>([]);
+async function getData(
+  searchType: string,
+  convertedParams: string,
+  limit: number,
+  offset: number
+) {
+  const res = await fetch(
+    `https://openlibrary.org/search.json?${searchType}=${convertedParams}&limit=${limit}&offset=${offset}`
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+}
 
-  const dispatch = useDispatch();
-
+async function BooksListBySearch({
+  params,
+}: {
+  params: { searchSlug: string[] };
+}) {
   const searchType = params.searchSlug[0];
   const searchField = params.searchSlug[1];
-
-  const offset = useSelector((state: RootState) => state.pagination.offset);
-  const limit = useSelector((state: RootState) => state.pagination.limit);
+  const currentPage = +params.searchSlug[2];
+  const limit = +params.searchSlug[3];
+  const offset = currentPage * limit - limit;
 
   const dropdownOptionSelected = optionsDropdown.find(
     (opt: DropdownOption) => opt.id === searchType
@@ -32,32 +39,20 @@ function BookListBySearch({ params }: { params: { searchSlug: string[] } }) {
 
   const convertedParams = searchField ? searchField.replace(/\s/g, "+") : "";
 
-  const { data, error } = useFetch<ApiData>(
-    `https://openlibrary.org/search.json?${searchType}=${convertedParams}&limit=${limit}&offset=${offset}`
-  );
-
-  const getTranformatedData = async () => {
-    if (!data) return;
-    const transformedBooks: Book[] = await dataTransformation(data);
-    transformedBooks && setBooks(transformedBooks);
-    dispatch(paginationActions.setTotalPages(Math.ceil(data.numFound / limit)));
-  };
-
-  useEffect(() => {
-    getTranformatedData();
-  }, [data]);
+  const data = await getData(searchType, convertedParams, limit, offset);
+  const transformedData = dataTransformation(data);
 
   return (
     <Fragment>
-      <Head>
-        <title>
-          {typeOfSearch} de {convertedParams}
-        </title>
-        <meta name="" content=""></meta>
-      </Head>
-      <BookList error={error} books={books} />
+      <BookList
+        books={transformedData}
+        url={`/search/${searchType}/${searchField}`}
+        totalPages={+Math.ceil(data.numFound / limit)}
+        currentPage={currentPage}
+        numberOfBooksPerPage={limit}
+      />
     </Fragment>
   );
 }
 
-export default BookListBySearch;
+export default BooksListBySearch;

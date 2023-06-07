@@ -1,5 +1,5 @@
-@import "../../../styles/Variables.scss";
-@import "../../../styles/Breakpoints.scss";
+@import "../../styles/Variables.scss";
+@import "../../styles/Breakpoints.scss";
 
 .book-detail {
   display: flex;
@@ -43,7 +43,6 @@
 
 .book-detail-content {
   color: map-get($colors, darkBrown);
-  font-family: $primaryFontFamily;
   margin-top: 1rem;
   text-align: center;
   position: relative;

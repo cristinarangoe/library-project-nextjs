@@ -6,6 +6,7 @@
   position: relative;
   top: 0;
   background-color: map-get($colors, superLightBrown);
+
   @include sm {
     display: flex;
     justify-content: space-between;
@@ -41,7 +42,6 @@
     display: flex;
     color: map-get($colors, darkBrown);
     padding-left: 2rem;
-    font-family: $secondaryFontFamily;
     h2 {
       font-size: map-get($fontSizes, header);
       font-weight: map-get($fontWeight, semibold);

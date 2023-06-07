@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import styles from "./SearchBar.module.scss";
 import SearchIcon from "../UI/SearchIcon";
-import { paginationActions } from "../../store/pagination";
-import { useDispatch } from "react-redux";
+
 import optionsDropdown from "../../constants/searchBarDropdownOptions";
 import DropdownOption from "../../models/searchBarDropdownOption";
 import { useRouter } from "next/navigation";
+import { montserrat } from "@/styles/fonts";
 
 function SearchBar() {
   const [inputText, setInputText] = useState("");
   const [searchOption, setSearchOption] = useState("q");
 
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const inputTextChangeHandler = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -21,9 +20,7 @@ function SearchBar() {
   };
 
   const searchButtonClickHandler = () => {
-    dispatch(paginationActions.setLimit(10));
-    dispatch(paginationActions.goToAPage(1));
-    router.push(`/search/${searchOption}/${inputText}`);
+    router.push(`/search/${searchOption}/${inputText}/${1}/${10}`);
     setInputText("");
     setSearchOption("q");
   };
@@ -57,6 +54,7 @@ function SearchBar() {
         name="searchBarMain"
         placeholder="Buscar"
         onChange={inputTextChangeHandler}
+        className={montserrat.className}
       />
       <button
         onClick={searchButtonClickHandler}
