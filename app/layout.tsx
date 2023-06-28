@@ -1,9 +1,7 @@
-import { Providers } from "@/store/provider";
 import "./globals.scss";
 import Navbar from "@/components/Header/Navbar";
-import { Suspense   } from "react";
-import Loading from "./loading";
 import { libre_caslon_text } from "@/styles/fonts";
+import { NextAuthProvider } from "./providers";
 
 export const metadata = {
   title: "Librería",
@@ -16,18 +14,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${libre_caslon_text.className}`}
-    >
+    <html lang="en" className={`${libre_caslon_text.className}`}>
       <body>
-        <Providers>
-          <Navbar />
-          {/* <Suspense fallback={<Loading />}>
+          <NextAuthProvider>
+            <Navbar />
             {children}
-            </Suspense> */}
-            {children}
-        </Providers>
+          </NextAuthProvider>
       </body>
     </html>
   );

@@ -6,19 +6,25 @@
   fill: none;
 }
 
-.icon-x-mark, .icon-bars{
-    @extend .icon;
-    height: 2.5rem;
+.icon-x-mark,
+.icon-bars {
+  @extend .icon;
+  height: 2.5rem;
 }
-.icon-search{
-    @extend .icon;
-    height: 1rem;
+.icon-search {
+  @extend .icon;
+  height: 1rem;
 }
-.icon-chevron-down{
-    @extend .icon;
-    height: 1.25rem;
+.icon-chevron-down {
+  @extend .icon;
+  height: 1.25rem;
 }
-.icon-heart{
-    @extend .icon;
-    height: 2rem;
+.icon-heart {
+  @extend .icon;
+  height: 2rem;
+}
+.icon-github,
+.icon-google {
+  @extend .icon;
+  height: 1.5rem;
 }

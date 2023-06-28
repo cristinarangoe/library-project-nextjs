@@ -1,38 +1,56 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./BookDetailContent.module.scss";
 import { BookDetailType } from "@/models/bookDetail";
 import Head from "next/head";
 import Image from "next/image";
 import DefaultImage from "../UI/DefaultImage";
 import HeartIcon from "../UI/HeartIcon";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store";
-import { favoriteBooksActions } from "@/store/favoriteBooks";
+import { useSession } from "next-auth/react";
+import { saveFavoriteBook } from "@/utils/saveFavoriteBooks";
 
 const BookDetailContent: React.FC<{
   book: BookDetailType;
 }> = (props) => {
-  const dispatch = useDispatch();
-  const book = props.book;
-  const favoriteBooks = useSelector(
-    (state: RootState) => state.favoriteBooks.favoriteBooks
-  );
+  const [isFavorite, setIsFavorite] = useState(false);
+  const { data: session } = useSession();
 
-  const settingFavoriteBooks = () => {
-    const localStorageFavoriteBooks = localStorage.getItem("favoriteBooks");
-    if (localStorageFavoriteBooks) {
-      const favorites = JSON.parse(localStorageFavoriteBooks);
-      dispatch(favoriteBooksActions.setFavoriteBooks(favorites));
+  const book = props.book;
+  const userEmail = session?.user?.email;
+
+  async function getData() {
+    const bookId = book.id;
+
+    const response = await fetch("/api/favorites/getOneFavorite", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ userEmail, bookId }),
+    });
+
+    const data = await response.json();
+    if (data) {
+      setIsFavorite(true);
+    } else {
+      setIsFavorite(false);
     }
-  };
+  }
 
   useEffect(() => {
-    settingFavoriteBooks();
-  }, []);
+    getData();
+  }, [userEmail]);
 
   const saveFavoriteBookClickHandler = () => {
-    dispatch(favoriteBooksActions.saveFavoriteBooks(book.id));
+    if (session && session.user?.email != null) {
+      const favoriteBook = {
+        userEmail: session.user?.email,
+        bookId: book.id,
+        name: book.title,
+      };
+      saveFavoriteBook(favoriteBook);
+      setIsFavorite((prevState) => !prevState);
+    }
   };
 
   return (
@@ -59,16 +77,18 @@ const BookDetailContent: React.FC<{
       <div className={styles["book-detail-content"]}>
         <div className={styles["book-detail-content-upper-side"]}>
           <h1>{book.title}</h1>
-          <button
-            className={`${
-              favoriteBooks.find((item) => item === book.id)
-                ? styles["book-detail-content-heart-active"]
-                : styles["book-detail-content-heart"]
-            }`}
-            onClick={saveFavoriteBookClickHandler}
-          >
-            <HeartIcon />
-          </button>
+          {session && (
+            <button
+              className={`${
+                isFavorite
+                  ? styles["book-detail-content-heart-active"]
+                  : styles["book-detail-content-heart"]
+              }`}
+              onClick={saveFavoriteBookClickHandler}
+            >
+              <HeartIcon />
+            </button>
+          )}
         </div>
         <h2 className={styles["book-detail-container-authors"]}>
           {book.authors}

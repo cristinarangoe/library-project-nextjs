@@ -6,7 +6,6 @@
   position: relative;
   top: 0;
   background-color: map-get($colors, superLightBrown);
-
   @include sm {
     display: flex;
     justify-content: space-between;
@@ -27,7 +26,7 @@
   button:hover {
     border: none;
   }
-  img{
+  img {
     height: 40px;
   }
   @include sm {
@@ -54,6 +53,16 @@
     }
   }
 }
+.nav-ppal-favorites {
+  display: none;
+  @include sm {
+    display: flex;
+    color: map-get($colors, darkBrown);
+    padding-left: 1rem;
+    font-size: map-get($fontSizes, header);
+    font-weight: map-get($fontWeight, semibold);
+  }
+}
 .nav-ppal-mobile-button {
   background-color: map-get($colors, superLightBrown);
   padding: 0;
@@ -64,8 +73,31 @@
   }
 }
 
-.side-nav-mobile {
+.side-nav-primary-buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+  .side-nav-mobile-login-button, .side-nav-mobile-favorite-button {
+    display: flex;
+    width: 25%;
+    background-color: map-get($colors, lightBrown);
+    padding: 1rem 0;
+    justify-content: center;
+    border-radius: 0.8rem;
+  }
+}
+
+.nav-auth {
   display: none;
+  @include sm {
+    display: flex;
+    margin-right: 1rem;
+    color: map-get($colors, darkBrown);
+    font-size: map-get($fontSizes, primary);
+    font-weight: map-get($fontWeight, semibold);
+  }
 }
 
 .nav-active {
@@ -83,6 +115,11 @@
   }
   .side-nav-mobile {
     display: flex;
+    flex-direction: column;
     height: 100%;
+  }
+  .side-nav-mobile-login {
+    text-align: center;
+    background-color: white;
   }
 }

@@ -3,11 +3,10 @@ import React, { useEffect, useState } from "react";
 import styles from "./BookList.module.scss";
 import BookItem from "./BookItem";
 import Book from "../../models/book";
-import { useDispatch, useSelector } from "react-redux";
-import { favoriteBooksActions } from "../../store/favoriteBooks";
 import DropdownNumberOfBooks from "./DropdownNumberOfBooks";
 import Pagination from "./Pagination";
-import { RootState } from "../../store";
+import { useSession } from "next-auth/react";
+import { getData } from "@/utils/getFavoriteBooks";
 
 const BookList: React.FC<{
   books: Book[];
@@ -16,22 +15,26 @@ const BookList: React.FC<{
   currentPage: number;
   numberOfBooksPerPage: number;
 }> = (props) => {
-  const [numberOfBooksPerPage, setNumberOfBooksPerPage] = useState(props.numberOfBooksPerPage);
-  const [currentPage, setCurrentPage] = useState(props.currentPage);
-
-  const dispatch = useDispatch();
-
-  const favoriteBooks = useSelector(
-    (state: RootState) => state.favoriteBooks.favoriteBooks
+  const [numberOfBooksPerPage, setNumberOfBooksPerPage] = useState(
+    props.numberOfBooksPerPage
   );
+  const [currentPage, setCurrentPage] = useState(props.currentPage);
+  const { data: session, status } = useSession();
+  const userEmail = session?.user?.email;
+  const [favoriteBooks, setFavoriteBooks] = useState<Book[]>([]);
+
+  async function getFavoriteBooksData() {
+    const data = await getData(userEmail);
+    setFavoriteBooks(data);
+  }
 
   useEffect(() => {
-    const localStorageItems = localStorage.getItem("favoriteBooks");
-    if (localStorageItems) {
-      const items = JSON.parse(localStorageItems);
-      dispatch(favoriteBooksActions.setFavoriteBooks(items));
-    }
-  }, []);
+    getFavoriteBooksData();
+  }, [userEmail]);
+
+  if (status === "loading") {
+    return <div>nooooooooooooooooooooooo</div>;
+  }
 
   if (props.books.length === 0) {
     return <p>No se encontró ningún libro en esta búsqueda</p>;
@@ -47,7 +50,7 @@ const BookList: React.FC<{
       <div className={styles["books-list"]}>
         {props.books.map((book) => {
           const isAFavoriteBook = favoriteBooks.find(
-            (item) => item === book.id
+            (item) => item.id === book.id
           );
           return (
             <BookItem

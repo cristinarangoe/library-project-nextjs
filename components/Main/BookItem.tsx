@@ -1,22 +1,28 @@
 import React from "react";
 import styles from "./BookItem.module.scss";
 import Book from "../../models/book";
-import { useDispatch } from "react-redux";
-import { favoriteBooksActions } from "../../store/favoriteBooks";
 import HeartIcon from "../UI/HeartIcon";
 import Link from "next/link";
 import Image from "next/image";
 import DefaultImage from "../UI/DefaultImage";
+import { useSession } from "next-auth/react";
+import { saveFavoriteBook } from "@/utils/saveFavoriteBooks";
 
 const BookItem: React.FC<{ book: Book; isFavorite: boolean }> = (props) => {
-  const dispatch = useDispatch();
+  const { data: session } = useSession();
 
   const path = `/bookDetail/${props.book.id}`;
 
-  const saveFavoriteBookClickHandler = () => {
-    dispatch(favoriteBooksActions.saveFavoriteBooks(props.book.id));
-  };
-  
+  async function saveFavoriteBookClickHandler() {
+    if (session && session.user?.email !== null) {
+      const book = {
+        userEmail: session.user?.email,
+        bookId: props.book.id,
+        name: props.book.title,
+      };
+      saveFavoriteBook(book);
+    }
+  }
   return (
     <div className={styles["book-item"]}>
       <div className={styles["book-item-image"]}>
@@ -35,17 +41,18 @@ const BookItem: React.FC<{ book: Book; isFavorite: boolean }> = (props) => {
             )}
           </div>
         </Link>
-        <button
-          className={`${
-            props.isFavorite
-              ? styles["book-item-image-heart-active"]
-              : styles["book-item-image-heart"]
-          }`}
-
-          onClick={saveFavoriteBookClickHandler}
-        >
-          <HeartIcon />
-        </button>
+        {session && (
+          <button
+            className={`${
+              props.isFavorite
+                ? styles["book-item-image-heart-active"]
+                : styles["book-item-image-heart"]
+            }`}
+            onClick={saveFavoriteBookClickHandler}
+          >
+            <HeartIcon />
+          </button>
+        )}
       </div>
       <div className={styles["book-item-content"]}>
         <div>

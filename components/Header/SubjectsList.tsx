@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./SubjectsList.module.scss";
 import subjectsLists from "../../constants/subjectsList";
-import { useDispatch } from "react-redux";
 import Link from "next/link";
 
 const SubjectsList: React.FC<{
@@ -9,7 +8,6 @@ const SubjectsList: React.FC<{
   isMobile: boolean;
   setDropdownClicked: React.Dispatch<React.SetStateAction<boolean>>;
 }> = (props) => {
-  const dispatch = useDispatch();
 
   const changeListDisplayHandler = () => {
     props.setDropdownClicked((prevState) => !prevState);
