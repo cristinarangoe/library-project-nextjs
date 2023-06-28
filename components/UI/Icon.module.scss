@@ -1,0 +1,30 @@
+@import "../../styles/Variables.scss";
+
+.icon {
+  stroke: map-get($colors, darkBrown);
+  stroke-width: 2px;
+  fill: none;
+}
+
+.icon-x-mark,
+.icon-bars {
+  @extend .icon;
+  height: 2.5rem;
+}
+.icon-search {
+  @extend .icon;
+  height: 1rem;
+}
+.icon-chevron-down {
+  @extend .icon;
+  height: 1.25rem;
+}
+.icon-heart {
+  @extend .icon;
+  height: 2rem;
+}
+.icon-github,
+.icon-google {
+  @extend .icon;
+  height: 1.5rem;
+}

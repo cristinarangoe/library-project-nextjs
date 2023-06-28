@@ -1,0 +1,22 @@
+@import "../../styles/Variables.scss";
+
+.default-image {
+  background-color: lightgrey;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  div {
+    height: 80%;
+    width: 80%;
+    border-style: solid;
+    border-color: white;
+    align-items: center;
+  }
+  p {
+    font-size: map-get($fontSizes, secondary);
+    padding: 0 0.5rem;
+    color: map-get($colors, darkBrown);
+  }
+}

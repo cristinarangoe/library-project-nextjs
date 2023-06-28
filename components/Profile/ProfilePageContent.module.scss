@@ -1,0 +1,34 @@
+@import "../../styles/Variables.scss";
+
+.profile {
+  padding: 0 2rem;
+  h2 {
+    padding: 1rem 0;
+    text-align: center;
+  }
+}
+.profile-content {
+  display: flex;
+  gap: 2rem;
+}
+.profile-logout-content {
+  width: 50%;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 2rem;
+  h3 {
+    text-align: center;
+    padding-bottom: 1rem;
+  }
+}
+
+.logout-button {
+  width: 100%;
+  background-color: map-get($colors, lightBrown);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.6rem;
+  color: map-get($colors, darkBrown);
+  font-weight: map-get($fontWeight, bold);
+  font-size: map-get($fontSizes, secondary);
+}

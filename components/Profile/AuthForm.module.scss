@@ -1,0 +1,88 @@
+@import "../../styles/Variables.scss";
+@import "../../styles/Breakpoints.scss";
+
+.auth-form {
+  margin: 2rem;
+  @include sm {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.auth-form-ui {
+  display: none;
+  background-color: map-get($colors, lightBrown);
+  @include sm {
+    display: flex;
+    width: 50%;
+  }
+}
+
+.auth-form-form-auth {
+  background-color: white;
+  padding: 1rem 3rem;
+  display: flex;
+  justify-content: center;
+  h2 {
+    text-align: center;
+  }
+  section {
+    width: 60%;
+  }
+  @include sm {
+    width: 50%;
+  }
+}
+
+.auth-form-content {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem 0;
+  input {
+    padding: 0.2rem 0.5rem;
+    width: 100%;
+  }
+}
+
+.auth-form-button-submit {
+  width: 100%;
+  background-color: map-get($colors, lightBrown);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.4rem;
+  color: map-get($colors, darkBrown);
+  font-weight: map-get($fontWeight, bold);
+  font-size: map-get($fontSizes, secondary);
+}
+.auth-form-social{
+    h5{
+        margin: 1rem 0;
+        text-align: center;
+    }
+}
+.auth-form-social-network {
+  display: flex;
+  gap: 1rem;
+  .auth-form-button-submit-social {
+    @extend .auth-form-button-submit;
+    background-color: white;
+    border-style: solid;
+    border-color: map-get($colors, lightBrown);
+    border-width: 0.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.auth-form-button-change-text{
+    margin: 1rem 0;
+    text-align: center;
+}
+.auth-form-button-change {
+  border: none;
+  background-color: inherit;
+  padding-left: 0.3rem;
+  color: map-get($colors, lightBrown);
+  font-weight: map-get($fontWeight, bold);
+  font-size: map-get($fontSizes, tertiary);
+}

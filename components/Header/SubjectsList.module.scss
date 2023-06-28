@@ -1,0 +1,40 @@
+@import "../../styles/Variables.scss";
+
+.main-nav-ppal-dropdown-option {
+  cursor: pointer;
+  a {
+    color: map-get($colors, darkBrown);
+    font-weight:  map-get($fontWeight, medium);
+    font-size: map-get($fontSizes, secondary);
+    display: block;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+  }
+  a:hover {
+    color: map-get($colors, darkBrown);
+    background-color: map-get($colors, lightBrown);
+  }
+}
+
+.dropdown-menu {
+  position: absolute;
+  list-style: none;
+  text-align: start;
+  margin: 0;
+  background-color: map-get($colors, superLightBrown);
+  padding: 0;
+  border-radius: 10px;
+  top: 50px;
+  z-index: 10;
+}
+
+.dropdown-menu-mobile{
+  position: relative;
+  border-radius: 0;
+  top: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
