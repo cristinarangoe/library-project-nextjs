@@ -1,0 +1,28 @@
+@import "../../styles/Variables.scss";
+@import "../../styles/Breakpoints.scss";
+
+.book-list-ppal {
+  height: 100%;
+  width: 100%;
+  background-color: map-get($colors, superLightBrown);
+  position: relative;
+}
+.books-list {
+  background-color: map-get($colors, superLightBrown);
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-column-gap: 2rem;
+  grid-row-gap: 2rem;
+  margin: 2rem;
+  @include sm-md {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include md-lg {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @include lg {
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 3rem;
+    grid-row-gap: 3rem;
+  }
+}

@@ -1,0 +1,54 @@
+@import "../../styles/Variables.scss";
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  text-align: center;
+  margin: 0 2rem;
+  background-color: map-get($colors, superLightBrown);
+  padding-bottom: 2rem;
+  button,
+  p {
+    height: 2.5rem;
+    min-width: 2.5rem;
+    width: auto;
+    padding: 0 0.2rem;
+  }
+  button:focus,
+  button:hover {
+    border: 0.01rem;
+    border-style: solid;
+    border-color: map-get($colors, lightBrown);
+  }
+}
+.pagination-pages {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.pagination-button {
+  font-size: map-get($fontSizes, primary);
+  font-weight: map-get($fontWeight, medium);
+  margin: 0;
+  padding: 0;
+  background-color: map-get($colors, superLightBrown);
+  border: 0;
+  border-radius: 0.5rem
+}
+.pagination-button-number {
+  @extend .pagination-button;
+}
+.pagination-button-number-active {
+  @extend .pagination-button;
+  background-color: map-get($colors, lightBrown);
+  color: white;
+}
+.pagination-button-icon-left {
+  @extend .pagination-button;
+  transform: rotate(90deg);
+}
+.pagination-button-icon-right {
+  @extend .pagination-button;
+  transform: rotate(270deg);
+}
